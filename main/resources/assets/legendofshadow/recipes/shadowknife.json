@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": { "item": "legendofshadow:shadowknife"},
+  "pattern": [
+    "#",
+    "X"
+  ],
+  "key": {
+    "#": {
+      "item": "legendofshadow:shadowingot"
+    },
+    "X": {
+      "item": "legendofshadow:bloodstick"
+    }
+  }
+}

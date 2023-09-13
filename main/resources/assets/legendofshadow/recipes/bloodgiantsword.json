@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "item": "legendofshadow:bloodgiantsword"
+  },
+  "pattern": [
+    "###",
+    "###",
+    " X "
+  ],
+  "key": {
+    "#": {
+      "item": "legendofshadow:coagulationingot"
+    },
+    "X": {
+      "item": "legendofshadow:bloodstick"
+    }
+  }
+}

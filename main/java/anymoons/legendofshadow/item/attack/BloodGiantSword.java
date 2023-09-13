@@ -16,7 +16,7 @@ public class BloodGiantSword extends ItemTool {
 
     public BloodGiantSword(Item.ToolMaterial material) {
 
-        super(12.0F,-3.0F,material,EFFECTIVE_ON); // 攻击伤害 = 2.0 + attackDamageIn
+        super(18.0F,-3.0F,material,EFFECTIVE_ON); // 攻击伤害 = 2.0 + attackDamageIn
 
     }
 

@@ -56,5 +56,14 @@ public final class ModelMapper {
         ModelLoader.setCustomModelResourceLocation(
                 ItemLoader.bloodgiantsword,0,new ModelResourceLocation(ItemLoader.bloodgiantsword.getRegistryName(),"inventory")
         );
+        ModelLoader.setCustomModelResourceLocation(
+                ItemLoader.etherapple,0,new ModelResourceLocation(ItemLoader.etherapple.getRegistryName(),"inventory")
+        );
+        ModelLoader.setCustomModelResourceLocation(
+                ItemLoader.etherpickaxe,0,new ModelResourceLocation(ItemLoader.etherpickaxe.getRegistryName(),"inventory")
+        );
+        ModelLoader.setCustomModelResourceLocation(
+                ItemLoader.shadowcore,0,new ModelResourceLocation(ItemLoader.shadowcore.getRegistryName(),"inventory")
+        );
     }
 }

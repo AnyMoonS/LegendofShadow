@@ -34,6 +34,9 @@ public final class ItemLoader
     public static Item shadowingot;
     public static Item bloodbow;
     public static Item bloodgiantsword;
+    public static Item etherapple;
+    public static Item etherpickaxe;
+    public static Item shadowcore;
 
     @SubscribeEvent
     public static void registerItem(RegistryEvent.Register<Item> event)
@@ -100,12 +103,24 @@ public final class ItemLoader
                                 .setUnlocalizedName("legendofshadow.shadowingot")
                                 .setMaxStackSize(64),
 
+                        shadowcore = new Item()
+                                .setCreativeTab(LEGENDOFSHADOW_TAB)
+                                .setRegistryName("legendofshadow:shadowcore")
+                                .setUnlocalizedName("legendofshadow.shadowcore")
+                                .setMaxStackSize(64),
+
 //-------------------------------------------------Food-------------------------------------------------------
 
                         shadowapple = new FoodLoader(10,10)
                                 .setCreativeTab(LEGENDOFSHADOW_TAB)
                                 .setRegistryName("legendofshadow:shadowapple")
                                 .setUnlocalizedName("legendofshadow.shadowapple")
+                                .setMaxStackSize(64),
+
+                        etherapple = new FoodLoader(10,10)
+                                .setCreativeTab(LEGENDOFSHADOW_TAB)
+                                .setRegistryName("legendofshadow:etherapple")
+                                .setUnlocalizedName("legendofshadow.etherapple")
                                 .setMaxStackSize(64),
 //-------------------------------------------------Tool-------------------------------------------------------
 
@@ -131,6 +146,12 @@ public final class ItemLoader
                                 .setCreativeTab(LEGENDOFSHADOW_TAB)
                                 .setRegistryName("legendofshadow:bloodgiantsword")
                                 .setUnlocalizedName("legendofshadow.bloodgiantsword")
+                                .setMaxStackSize(1),
+
+                        etherpickaxe = new PickaxeLoader(Material.ETHERPICKAXE)
+                                .setCreativeTab(LEGENDOFSHADOW_TAB)
+                                .setRegistryName("legendofshadow:etherpickaxe")
+                                .setUnlocalizedName("legendofshadow.etherpickaxe")
                                 .setMaxStackSize(1)
 
 

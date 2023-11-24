@@ -18,13 +18,19 @@ public class FoodLoader extends ItemFood {
 
     @Override
     public void onFoodEaten(ItemStack itemStack, World worldIn, EntityPlayer player) {
-        if (player.world.isRemote) {
+        if (!player.world.isRemote) {
             NBTTagCompound playerData = player.getEntityData();
             if (!itemStack.isEmpty() && itemStack.getItem() == ItemLoader.shadowapple) {
-                playerData.setInteger("ShadowHeart", 5);
-                player.sendMessage(new TextComponentString("你感到有什么在你的耳边低语"));
-                // int ShadowHeartValue = playerData.getInteger("ShadowHeart");
-                // ShadowHeartValue += 5;
+                int shadowHeartValue = playerData.getInteger("ShadowHeart");
+                shadowHeartValue += 5;
+                playerData.setInteger("ShadowHeart", shadowHeartValue);
+                player.sendMessage(new TextComponentString("杂乱的呓语在耳边萦绕不绝"));
+            }
+            if (!itemStack.isEmpty() && itemStack.getItem() == ItemLoader.etherapple) {
+                int soulHeartValue = playerData.getInteger("SoulHeart");
+                soulHeartValue += 5;
+                playerData.setInteger("SoulHeart", soulHeartValue);
+                player.sendMessage(new TextComponentString("你感受了灵魂深处的回响"));
             }
         }
     }

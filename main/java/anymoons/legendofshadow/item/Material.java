@@ -11,4 +11,6 @@ public class Material {
             .setRepairItem(new ItemStack(ItemLoader.shadowbloodingot));
     public static final Item.ToolMaterial BLOODGIANTSWORD = EnumHelper.addToolMaterial("BLOODGIANTSWORD",1,100,10.0f,1.0f,30)
             .setRepairItem(new ItemStack(ItemLoader.coagulationingot));
+    public static final Item.ToolMaterial ETHERPICKAXE = EnumHelper.addToolMaterial("ETHERPICKAXE",4,100,10.0f,1.0f,30)
+            .setRepairItem(new ItemStack(ItemLoader.etheringot));
 }

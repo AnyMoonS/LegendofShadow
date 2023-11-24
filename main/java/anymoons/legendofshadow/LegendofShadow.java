@@ -1,6 +1,5 @@
 package anymoons.legendofshadow;
 
-import anymoons.legendofshadow.common.CommonProxy;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;

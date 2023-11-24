@@ -53,5 +53,8 @@ public final class ModelMapper {
         ModelLoader.setCustomModelResourceLocation(
                 ItemLoader.bloodbow,0,new ModelResourceLocation(ItemLoader.bloodbow.getRegistryName(),"inventory")
         );
+        ModelLoader.setCustomModelResourceLocation(
+                ItemLoader.bloodgiantsword,0,new ModelResourceLocation(ItemLoader.bloodgiantsword.getRegistryName(),"inventory")
+        );
     }
 }

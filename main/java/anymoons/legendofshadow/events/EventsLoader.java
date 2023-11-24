@@ -1,8 +1,6 @@
 package anymoons.legendofshadow.events;
 
 import anymoons.legendofshadow.item.ItemLoader;
-import anymoons.legendofshadow.player.PlayerHeartStart;
-import anymoons.legendofshadow.player.PlayerProperties;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,9 +8,12 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItem;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.text.TextComponentScore;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
@@ -22,15 +23,67 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 
 @Mod.EventBusSubscriber(modid = "legendofshadow")
 public class EventsLoader {
 
-    private static int BGSenemiesHit = 0; //
-
     public EventsLoader() {
         MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    @SubscribeEvent
+    public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        EntityPlayer player = event.player;
+        NBTTagCompound playerData = player.getEntityData();
+        if (!player.world.isRemote) {
+            // 检查是否已经有自定义的NBT值
+            if (!playerData.hasKey("ShadowHeart")) {
+                playerData.setTag("ShadowHeart", new NBTTagCompound());
+                // 赋予初始值
+                playerData.setInteger("ShadowHeart", 0);
+            }
+            if (!playerData.hasKey("SoulHeart")) {
+                playerData.setTag("SoulHeart", new NBTTagCompound());
+                // 赋予初始值
+                playerData.setInteger("SoulHeart", 0);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerDeath(LivingDeathEvent event) {
+        if (event.getEntity() instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) event.getEntity();
+            NBTTagCompound playerData = player.getEntityData();
+            if (!player.world.isRemote) {
+                if (!playerData.hasKey("ShadowHeartD")) {
+                    playerData.setTag("ShadowHeartD", new NBTTagCompound());
+                }
+                if (!playerData.hasKey("SoulHeartD")) {
+                    playerData.setTag("SoulHeartD", new NBTTagCompound());
+                }
+                // 在这里保存你想要保留的NBT数据
+                int ShadowHeartValue = playerData.getInteger("ShadowHeart");
+                int SoulHeartValue = playerData.getInteger("SoulHeart");
+                playerData.setInteger("ShadowHeartD", ShadowHeartValue);
+                playerData.setInteger("SoulHeartD", SoulHeartValue);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+        EntityPlayer player = event.player;
+        NBTTagCompound playerData = player.getEntityData();
+        if(!player.world.isRemote){
+            // 在这里恢复你保存的NBT数据
+            int ShadowHeartValue = playerData.getInteger("ShadowHeartD");
+            int SoulHeartValue = playerData.getInteger("SoulHeartD");
+            playerData.setInteger("ShadowHeart", ShadowHeartValue);
+            playerData.setInteger("SoulHeart", SoulHeartValue);
+        }
     }
 
     @SubscribeEvent
@@ -54,17 +107,18 @@ public class EventsLoader {
             ItemStack heldItem = player.getHeldItemMainhand();
             if (!heldItem.isEmpty() && heldItem.getItem() == ItemLoader.whatami) {
                 int ShadowHeartValue = playerData.getInteger("ShadowHeart");
-                // int SoulHeart = PlayerProperties.SoulHeart;
+                int SoulHeartValue = playerData.getInteger("SoulHeart");
                 String ShadowHeartMessage = "你的浸影值为 " + ShadowHeartValue;
-                // String SoulHeartMessage = "你的趋光值为 " + SoulHeart;
+                String SoulHeartMessage = "你的趋光值为 " + SoulHeartValue;
                 player.sendMessage(new TextComponentString(ShadowHeartMessage));
-                // player.sendMessage(new TextComponentString(SoulHeartMessage));
+                player.sendMessage(new TextComponentString(SoulHeartMessage));
             }
         }
     }
 
     @SubscribeEvent
     public static void BloodGiantSwordAttack(LivingAttackEvent event) { //渴血巨剑额外伤害判定
+        int BGSenemiesHit = 0; //
         EntityLivingBase target = event.getEntityLiving();
         EntityLivingBase attacker = (EntityLivingBase) event.getSource().getTrueSource();
         EntityPlayer player = (EntityPlayer) attacker;
@@ -88,7 +142,7 @@ public class EventsLoader {
 
 
 //    @SubscribeEvent
-//    public static void BloodGiantSwordHeal(LivingHurtEvent event) { //渴血巨剑效果判定
+//    public static void BloodGiantSwordHeal(LivingHurtEvent event) { //渴血巨剑吸血效果判定
 //        EntityLivingBase attacker = (EntityLivingBase) event.getSource().getTrueSource();
 //        if (attacker instanceof EntityPlayer) {
 //            EntityPlayer player = (EntityPlayer) attacker;

@@ -1,6 +1,5 @@
 package anymoons.legendofshadow.item;
 
-import anymoons.legendofshadow.player.PlayerProperties;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
@@ -18,22 +17,15 @@ public class FoodLoader extends ItemFood {
     }
 
     @Override
-    public void onFoodEaten(ItemStack itemStack, World worldIn, EntityPlayer Player) {
-        if (Player.world.isRemote) {
-            EntityPlayer player = Player;
-            ItemStack heldItem = itemStack;
+    public void onFoodEaten(ItemStack itemStack, World worldIn, EntityPlayer player) {
+        if (player.world.isRemote) {
             NBTTagCompound playerData = player.getEntityData();
-            if (!heldItem.isEmpty() && heldItem.getItem() == ItemLoader.shadowapple) {
-                player.sendMessage(new TextComponentString("你感到有什么在你的耳边低语，"));
-                PlayerProperties.setShadowHeart(5);
-                PlayerProperties.writeToShadowHeart(playerData);
+            if (!itemStack.isEmpty() && itemStack.getItem() == ItemLoader.shadowapple) {
+                playerData.setInteger("ShadowHeart", 5);
+                player.sendMessage(new TextComponentString("你感到有什么在你的耳边低语"));
+                // int ShadowHeartValue = playerData.getInteger("ShadowHeart");
+                // ShadowHeartValue += 5;
             }
         }
-    }
-
-    @SubscribeEvent
-    public void EatShadowApple(LivingEntityUseItemEvent.Finish event) {
-        ItemStack usedItem = event.getItem();
-        onFoodEaten(usedItem,event.getEntity().world, (EntityPlayer) event.getEntity());
     }
 }
